@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+void enterNumber(int& m, int& n, char& x);
+void calc(int const& m, int const& n, char const& x, int& result);
+int main()
+{
+	int m, n;
+	char x;
+	int result;
+	enterNumber(m, n, x);
+	calc(m, n, x, result);
+	cout << m << x << n << "=" << result << endl;
+}
+
+void enterNumber(int& m, int& n, char& x)
+{
+	cout << "enter number (+,-,*,/) number\n";
+	cin >> m >> x >> n;
+}
+
+void calc(int const& m, int const& n, char const& x, int& result)
+{
+	switch (x)
+	{
+	case '+': result = m + n;
+		return;
+	case '-': result = m - n;
+		return;
+	case '*': result = m * n;
+		return;
+	case '/': result = m / n;
+	default:
+		break;
+	}
+}
