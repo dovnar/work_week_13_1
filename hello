@@ -1,0 +1,11 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+typedef int(*msgBox)(HWND, LPCSTR, LPCSTR, UINT);
+int main()
+{
+	int(*pMsgBox)(HWND, LPCSTR, LPCSTR, UINT);
+	pMsgBox = (msgBox)GetProcAddress(LoadLibraryA("User32.dll"), "MessageBoxA");
+	pMsgBox(NULL, "user", "hello", MB_OK);
+}
