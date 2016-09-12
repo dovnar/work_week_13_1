@@ -1,0 +1,33 @@
+#include <iostream>
+
+using namespace std;
+
+void search(int(&arr)[10], int const& size, int& max, int& min);
+
+int main()
+{
+	int const size {10};
+	int arr[size] {51, 65, 23, 45, 26, 62, 48, 15, 3, 81};
+	int max = INT_MIN;
+	int min = INT_MAX;
+	search(arr, size, max, min);
+	cout << "max in arr = " << max << "min in arr = " << min << endl;
+}
+
+void search(int(&arr)[10], int const& size, int& max, int& min)
+{
+	for (int i = 0; i < size; i++)
+	{
+		int& l = arr[i];
+		cout << l << ", ";
+		if (l > max)
+		{
+			max = l;
+		}
+		if (l < min)
+		{
+			min = l;
+		}
+	}
+	cout << endl;
+}
