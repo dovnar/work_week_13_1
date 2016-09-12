@@ -1,0 +1,47 @@
+#include <iostream>
+
+using namespace std;
+int printMin(int& min, int& max);
+int printMax(int& min, int& max);
+int getInputAndCalc(int& min, int& max, int(*minEndMax)(int& min, int& max));
+
+int main()
+{
+	int min, max;
+	int choice;
+	int(*minEndMax)(int& min, int& max);
+	cout << "choice\nmin = 1\nmax = 2\n";
+	cin >> choice;
+	if (choice == 1)
+	{
+		minEndMax = printMin;
+	}
+	else
+	{
+		minEndMax = printMax;
+	}
+	getInputAndCalc(min, max, minEndMax);
+	
+}
+int getInputAndCalc(int& min, int& max, int(*minEndMax)(int& min, int& max))
+{
+	cout << "enter number min: ";
+	cin >> min;
+	cout << "enter number max: ";
+	cin >> max;
+
+	
+	return (*minEndMax)(min,max);
+}
+
+int printMin(int& min, int& max)
+{
+	cout << "min = " << min << endl;
+	return 0;
+}
+
+int printMax(int& min, int& max)
+{
+	cout << "max = " << max << endl;
+	return 0;
+}
