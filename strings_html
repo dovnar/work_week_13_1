@@ -1,0 +1,150 @@
+#include <iostream>
+int sortingArray(char(&str)[30][256]);
+void autArray(char str[30][256], int line);
+void volideisenHtmlKoda(char str[30][256], int line);
+int main()
+{
+	int const count{ 256 };
+	int const lineStr{ 30 };
+	char str[lineStr][count];
+	std::cout << "enter code html :" << std::endl;
+	std::cin.getline(str[0], count);
+	int line = sortingArray(str);
+	volideisenHtmlKoda(str, line);
+	autArray(str, line);
+}
+
+
+int sortingArray(char(&str)[30][256])
+{
+	int line = 1;
+	for (int i = 0; str[0][i] != '\0'; i++)								//ход по всему массиву
+	{
+		if (str[0][i] == '<')									//поиск начало тега	
+		{
+			int j = 0;
+			for (; str[0][i + j] != '>'; j++)					//поиск размер тега
+			{
+			}
+			int k = 0;
+			for (; k < j; k++)						//запись страки в паралельный массив
+			{
+				str[line][k] = str[0][i+k];
+			}
+			str[line][k] = str[0][i+k];							//скобка тега >
+			str[line][k + 1] = '\0';							//конец страки
+			i += k;
+			line++;
+		}
+		else
+		{														//присвоение не теговой страки 
+			int j = 0;
+			for (; str[0][i + j] != '<'; j++)
+			{
+			}
+			int k = 0;
+			for (; k < j; k++)							
+			{
+				str[line][k] = str[0][i+k];
+			}
+			str[line][k] = '\0';
+			line++;
+			i += k-1;
+		}
+	}
+	return line;
+}
+
+void autArray(char str[30][256], int line)
+{
+	int tab = 0;
+	for(int i = 1; i < line; i++)
+	{
+		std::cout << str[i] << std::endl;
+		if (str[i][0] == '<')
+		{
+			if (str[i][1] == '/'&& str[i+1][1] != '/')
+			{
+			}
+			else if (str[i][1] != '/')
+			{
+				tab++;
+			}
+			else
+			{
+				tab--;
+			}
+		}
+		else
+		{
+			tab--;
+		}
+		for (int j = 0; j < tab; j++)
+		{
+			std::cout << "\t";
+		}
+		
+	}
+}
+
+
+void volideisenHtmlKoda(char str[30][256], int line)
+{
+	int count = 0;
+	int volid = 0;
+	for (int i = 0; i < line; i++)
+	{
+		
+		if (str[i][1] != '/' &&
+			str[i][0] == '<')
+		{
+			count++;
+			for (int j = 0; j < line; j++)
+			{
+				for (int l = 1; str[j][l] != '\0'; l++)
+				{
+					if (str[i][0] == '<' &&
+						str[j][0] == '<')
+					{
+						if (str[i][l] == str[j][l+1]&&
+							str[j][1] == '/')
+						{
+							volid++;
+						}
+					}
+				}
+			}
+		}
+		if (count == volid)
+		{
+			std::cout << str[i] << " no closing tag\terror";
+			exit(1);
+		}
+		if (str[i][1] == '/' &&
+			str[i][0] == '<')
+		{
+			count++;
+			for (int j = 0; j < line; j++)
+			{
+				for (int l = 1; str[j][l] != '\0'; l++)
+				{
+					if (str[i][0] == '<' &&
+						str[j][0] == '<')
+					{
+						if (str[j][l] == str[i][l + 1] &&
+							str[i][1] == '/')
+						{
+							volid++;
+						}
+					}
+				}
+			}
+		}
+		if (count == volid)
+		{
+			std::cout << str[i] << " no open tag\terror";
+			exit(1);
+	}
+}
+
+/*<html><head><title>hello</title></head><body><h1>user</h1><p>hi</p></body></html>*/
