@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+char** initializeArray(int lineCount, int lineUsedCount, int countChar);
+void fillArray(char** name);
+void printName(char** arr, int lineUsedCount);
+char** sortArray(char** name, int lineUsedCount, int countChar);
+char** insertUser(char** name, int lineCount, int lineUsedCount);
+int enterName(int name, int lineUsedCount);
+void deleteArray(char** name, int lineCount);
+void main()
+{
+	char** name = nullptr;
+	int lineCount = 50;
+	int lineUsedCount = 5;
+	int countChar = 255;
+	name = initializeArray(lineCount, lineUsedCount);
+	fillArray(name);
+	printName(name, lineUsedCount);
+	name = sortArray(name, lineUsedCount);
+	printName(name, lineUsedCount);
+
+
+	deleteArray(name, lineUsedCount);
+}
+
+char** insertUser(char** name, int lineCount, int* lineUsedCount, int countChar)
+{
+	
+	for (int i = 0; i < i; i++)
+	{
+		name[*lineUsedCount + i] = new char[countChar];
+		
+		cin.getline(name[*lineUsedCount + i], countChar);
+	}
+}
+int enterName(int lineCount, int* lineUsedCount, int countChar)
+{
+	int plusLine;
+	cout << "insert count line in arr max value " << lineCount - *lineUsedCount << " \nenter count line: ";
+	cin >> plusLine;
+	if (*lineUsedCount + plusLine >= lineCount)
+	{
+		cout << "error count line > max value" << endl;
+		return 0;
+	}
+	char* str;
+	cin.getline(str, 255);
+	
+}
+void deleteArray(char** name, int lineUsedCount)
+{
+	for (int i = 0; i < lineUsedCount; i++)
+	{
+		delete[] name[i];
+	}
+	delete[] name;
+}
+
+void fillArray(char** name)
+{
+	strcpy(name[0], "Eliza");
+	strcpy(name[1], "Kity");
+	strcpy(name[2], "Jorj");
+	strcpy(name[3], "Maxim");
+	strcpy(name[4], "Bat");
+}
+
+
+char** initializeArray(int lineCount, int lineUsedCount, int countChar)
+{
+	char** str = new char*[lineCount];
+	for (int i = 0; i < lineUsedCount; i++)
+	{
+		str[i] = new char[countChar];
+	}
+	return str;
+}
+
+
+void printName(char** name, int lineUsedCount)
+{
+	if (name == nullptr)
+	{
+		cout << "error!!!\nnull";
+		return;
+	}
+	cout << "[";
+	for (int i = 0; i < lineUsedCount; i++)
+	{
+		cout << &name[i] << ":\"" << name[i] << "\"";
+		if (i < lineUsedCount - 1)
+		{
+			cout << ", ";
+		}
+	}
+	cout << "]" << endl;
+}
+
+char** sortArray(char** name, int lineUsedCount)
+{
+	int sort;
+	cout << "selection sorting: ascending = 1, desending = 2\nenter: ";
+	cin >> sort;
+	if (sort != 1 &&
+		sort != 2)
+	{
+		cout << "error selection sorting";
+		exit(1);
+	}
+	for (int i = 0; i < lineUsedCount - 1; i++)
+	{
+		for (int j = 0; j < lineUsedCount - 1 - i; j++)
+		{
+			int result = strcmp(name[j], name[j + 1]);
+			if (result > 0 && sort == 1 ||
+				result < 0 && sort == 2)
+			{
+				char* temp = name[j];
+				name[j] = name[j + 1];
+				name[j + 1] = temp;
+			}
+		}
+	}
+	return name;
+}
