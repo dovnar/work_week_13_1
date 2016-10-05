@@ -16,7 +16,7 @@ int main()
 	char** fieldFront = new char*[size];
 	for (int i = 0; i < size; i++)
 	{
-		*(fieldFront + i) = new char[size]{char(219), char(219), char(219), char(219), char(219), char(219), char(219), char(219), char(219), char(219)};
+		*(fieldFront + i) = new char[size] {char(254), char(254), char(254), char(254), char(254), char(254), char(254), char(254), char(254), char(254)};
 	}
 
 	initializeFieldBack(fieldBack, size);
@@ -24,18 +24,18 @@ int main()
 
 	for (int i = 0; i < size; i++)					//delete back field
 	{
-		delete[] *(fieldBack + i);
+		delete[] * (fieldBack + i);
 	}
 	delete[] fieldBack;								//delete back field
 
 	for (int i = 0; i < size; i++)					//delete front field
 	{
-		delete[] *(fieldFront + i);
+		delete[] * (fieldFront + i);
 	}
 	delete[] fieldFront;									//delete front field
 }
 
-void initializeFieldBack(int** fieldBack, int size)			//{char 253, int 9 bomb} {char 149, int 0 pusto} {char 219 neotmechenaia oblost'}
+void initializeFieldBack(int** fieldBack, int size)			//{char 253, int 9 bomb} {char 149, int 0 pusto} {char 254 neotmechenaia oblost'}
 {
 	int vertical, horizontal;
 	int count = 0;
@@ -53,7 +53,7 @@ void initializeFieldBack(int** fieldBack, int size)			//{char 253, int 9 bomb} {
 
 	for (vertical = 0; vertical < size; vertical++)					//инитиализатия числами
 	{
-		for (horizontal = 0; horizontal < size; horizontal++)		
+		for (horizontal = 0; horizontal < size; horizontal++)
 		{
 			if (fieldBack[vertical][horizontal] == 9)
 			{
@@ -61,12 +61,15 @@ void initializeFieldBack(int** fieldBack, int size)			//{char 253, int 9 bomb} {
 				{
 					for (int h = -1; h < 2; h++)
 					{
-						if (v != 0 && h != 0)
+						if (v != 0 || h != 0)
 						{
-							if (((vertical + v) >= 0 && (vertical + v) < 10) && 
+							if (((vertical + v) >= 0 && (vertical + v) < 10) &&
 								((horizontal + h) >= 0 && (horizontal + h) < 10))
 							{
-								fieldBack[vertical + v][horizontal + h]++;
+								if (fieldBack[vertical + v][horizontal + h] != 9)
+								{
+									fieldBack[vertical + v][horizontal + h]++;
+								}
 							}
 						}
 					}
@@ -76,9 +79,16 @@ void initializeFieldBack(int** fieldBack, int size)			//{char 253, int 9 bomb} {
 	}																//инитиализатия числами
 }
 
-void printFieldAll(int** fieldBack, char** fieldFront, int size)		//{char 253, int 9 bomb} {char 149, int 0 pusto} {char 219 neotmechenaia oblost'}
+void printFieldAll(int** fieldBack, char** fieldFront, int size)		//{char 253, int 9 bomb} {char 149, int 0 pusto} {char 254 neotmechenaia oblost'}
 {
-
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			std::cout << fieldBack[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
 	std::cout << "select cell in field" << std::endl;
 	int game = 1;
 	do
@@ -88,7 +98,7 @@ void printFieldAll(int** fieldBack, char** fieldFront, int size)		//{char 253, i
 		{
 			for (horizontal = 0; horizontal < size; horizontal++)
 			{
-				std::cout << fieldFront[vertical][horizontal];
+				std::cout << fieldFront[vertical][horizontal] << " ";
 			}
 			std::cout << std::endl;
 		}
@@ -105,7 +115,7 @@ void printFieldAll(int** fieldBack, char** fieldFront, int size)		//{char 253, i
 		}
 		else if (value == 0)
 		{
-			fieldFront[vertical][horizontal] = char(149);
+			fieldFront[vertical][horizontal] = char(249);
 		}
 		else
 		{
